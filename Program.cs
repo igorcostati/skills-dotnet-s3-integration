@@ -66,12 +66,21 @@ class Program
 
             string keyName = Path.GetFileName(filePath);
 
+            var tags = new List<Tag>
+            {
+                new Tag { Key = "owner", Value = "aws.labs.igor.costa" },
+                new Tag { Key = "cost-center", Value = "aws-labs" },
+                new Tag { Key = "project", Value = "aws-labs-advc" }
+            };
+
             var putRequest = new PutObjectRequest
             {
                 BucketName = bucketName,
                 Key = keyName,
                 FilePath = filePath,
-                ContentType = "application/octet-stream"
+                ContentType = "application/octet-stream",
+                TagSet = tags
+
             };
 
             PutObjectResponse response = await s3Client.PutObjectAsync(putRequest);
